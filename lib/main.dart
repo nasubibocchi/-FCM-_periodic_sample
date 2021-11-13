@@ -120,6 +120,7 @@ class MyHomePage extends HookConsumerWidget {
     useEffect(() {
       ref.read(tokenProvider.notifier).getToken();
     }, const []);
+    print(token);
 
     return MainPage(fcmToken: token);
   }
