@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fcm_periodic_sample/entities/post.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -56,8 +57,10 @@ class MainPage extends HookConsumerWidget {
                           shrinkWrap: true,
                           itemCount: postList.length,
                           itemBuilder: (BuildContext context, int index) {
-                            final notifyDate = DateTime(postList[index].year,
-                                postList[index].month, postList[index].day);
+                            final notifyDate = DateTime(
+                                postList[index].notifyDate!.year,
+                                postList[index].notifyDate!.month,
+                                postList[index].notifyDate!.day);
 
                             return Card(
                               color: Colors.white.withOpacity(0.8),

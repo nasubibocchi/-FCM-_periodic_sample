@@ -7,6 +7,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'common_state/token/token_provider.dart';
+
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
 }
@@ -119,6 +121,6 @@ class MyHomePage extends HookConsumerWidget {
       ref.read(tokenProvider.notifier).getToken();
     }, const []);
 
-    return MainPage();
+    return MainPage(fcmToken: token);
   }
 }
