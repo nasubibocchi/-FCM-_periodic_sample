@@ -5,6 +5,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'common_state/token/token_provider.dart';
@@ -28,18 +29,18 @@ Future<void> main() async {
   );
 
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-  FlutterLocalNotificationsPlugin();
+      FlutterLocalNotificationsPlugin();
 
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
-      AndroidFlutterLocalNotificationsPlugin>()
+          AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(channel);
 
-  await FCMConfig.instance
-      .init(
-    defaultAndroidForegroundIcon: '@mipmap/ic_launcher', //default is @mipmap/ic_launcher
+  await FCMConfig.instance.init(
+    defaultAndroidForegroundIcon: '@mipmap/ic_launcher',
+    //default is @mipmap/ic_launcher
     defaultAndroidChannel: const AndroidNotificationChannel(
-      'high_importance_channel',// same as value from android setup
+      'high_importance_channel', // same as value from android setup
       'Fcm config',
       importance: Importance.high,
       sound: RawResourceAndroidNotificationSound('notification'),
@@ -106,6 +107,12 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [Locale('English'), Locale('ja')],
     );
   }
 }

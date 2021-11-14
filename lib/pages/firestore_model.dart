@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 
 class FirestoreModel {
   final firestore = FirebaseFirestore.instance;
@@ -17,7 +18,10 @@ class FirestoreModel {
   }
 
   Future<void> add2Firestore(
-      {required text, required notifyDate, required fcmToken}) async {
+      {required text,
+      required notifyDate,
+      required fcmToken,
+      required BuildContext context}) async {
     final collectionRef =
         firestore.collection('users').doc(fcmToken).collection('post');
 
@@ -27,5 +31,7 @@ class FirestoreModel {
       'notifyDate': notifyDate,
       'createdAt': DateTime.now(),
     });
+    var count = 0;
+    Navigator.popUntil(context, (route) => count++ >= 2);
   }
 }

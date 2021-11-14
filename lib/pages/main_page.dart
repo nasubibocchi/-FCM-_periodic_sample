@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fcm_periodic_sample/entities/post.dart';
+import 'package:fcm_periodic_sample/pages/post_page.dart';
+import 'package:fcm_periodic_sample/pages/widgets/date_widget/date_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -13,11 +15,17 @@ class MainPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final firestore = FirebaseFirestore.instance;
+    final dateModel = DateModel();
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => PostPage(fcmToken: fcmToken)));
+        },
         backgroundColor: Colors.white,
         child: const Icon(Icons.add, color: Colors.pink),
       ),
@@ -68,10 +76,6 @@ class MainPage extends HookConsumerWidget {
                                 shrinkWrap: true,
                                 itemCount: postList.length,
                                 itemBuilder: (BuildContext context, int index) {
-                                  final notifyDate = DateTime(
-                                      postList[index].notifyDate!.year,
-                                      postList[index].notifyDate!.month,
-                                      postList[index].notifyDate!.day);
 
                                   return Card(
                                     color: Colors.white.withOpacity(0.8),
@@ -83,7 +87,8 @@ class MainPage extends HookConsumerWidget {
                                           child: Text(
                                               postList[index].text.toString()),
                                         ),
-                                        Text(notifyDate.toString()),
+                                        Text(dateModel.dateFormat(
+                                            postList[index].notifyDate!)),
                                       ],
                                     ),
                                   );

@@ -1,7 +1,10 @@
 import 'package:fcm_periodic_sample/pages/firestore_model.dart';
+import 'package:fcm_periodic_sample/pages/widgets/date_widget/date_proovider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import 'widgets/date_widget/notify_date_widget.dart';
 
 class PostPage extends HookConsumerWidget {
   PostPage({required this.fcmToken});
@@ -19,6 +22,8 @@ class PostPage extends HookConsumerWidget {
 
     final firestoreModel = FirestoreModel();
 
+    notifyDate = ref.watch(notifyDateProvider).notifyDate!;
+
     return Scaffold(
       body: Container(
         height: double.infinity,
@@ -35,7 +40,7 @@ class PostPage extends HookConsumerWidget {
         ),
         child: Column(
           children: [
-            const SizedBox(height: 20.0),
+            const SizedBox(height: 50.0),
             //text
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -111,7 +116,8 @@ class PostPage extends HookConsumerWidget {
                                       firestoreModel.add2Firestore(
                                           text: text,
                                           notifyDate: notifyDate,
-                                          fcmToken: fcmToken);
+                                          fcmToken: fcmToken,
+                                          context: context);
                                     }
                                   },
                                   style: OutlinedButton.styleFrom(
