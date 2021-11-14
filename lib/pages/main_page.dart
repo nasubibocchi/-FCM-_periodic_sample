@@ -46,57 +46,57 @@ class MainPage extends HookConsumerWidget {
               ? const Center(
                   child: CircularProgressIndicator(),
                 )
-              : SingleChildScrollView(
-                  child: StreamBuilder(
-                      stream: firestore
-                          .collection('users')
-                          .doc(fcmToken)
-                          .collection('post')
-                          .orderBy('createdAt')
-                          .snapshots(),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<QuerySnapshot> snapshot) {
-                        if (snapshot.hasError) {
-                          return Text(snapshot.error.toString());
-                        } else if (!snapshot.hasData) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        } else if (snapshot.data!.docs.isEmpty) {
-                          return const Center(
-                            child: SizedBox(),
-                          );
-                        } else {
-                          final postList =
-                              snapshot.data!.docs.map((e) => Post(e)).toList();
+              : StreamBuilder(
+                  stream: firestore
+                      .collection('users')
+                      .doc(fcmToken)
+                      .collection('post')
+                      .orderBy('createdAt')
+                      .snapshots(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.hasError) {
+                      return Text(snapshot.error.toString());
+                    } else if (!snapshot.hasData) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (snapshot.data!.docs.isEmpty) {
+                      return const Center(
+                        child: SizedBox(),
+                      );
+                    } else {
+                      final postList =
+                          snapshot.data!.docs.map((e) => Post(e)).toList();
 
-                          return SizedBox(
-                            height: size.height * 0.88,
-                            child: ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: postList.length,
-                                itemBuilder: (BuildContext context, int index) {
+                      return SingleChildScrollView(
+                        child: SizedBox(
+                          height: size.height * 0.88,
+                          child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: postList.length,
+                              itemBuilder: (BuildContext context, int index) {
 
-                                  return Card(
-                                    color: Colors.white.withOpacity(0.8),
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 8.0, horizontal: 16.0),
-                                          child: Text(
-                                              postList[index].text.toString()),
-                                        ),
-                                        Text(dateModel.dateFormat(
-                                            postList[index].notifyDate!)),
-                                      ],
-                                    ),
-                                  );
-                                }),
-                          );
-                        }
-                      }),
-                )),
+                                return Card(
+                                  color: Colors.white.withOpacity(0.8),
+                                  child: Column(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 8.0, horizontal: 16.0),
+                                        child: Text(
+                                            postList[index].text.toString()),
+                                      ),
+                                      Text(dateModel.dateFormat(
+                                          postList[index].notifyDate!)),
+                                    ],
+                                  ),
+                                );
+                              }),
+                        ),
+                      );
+                    }
+                  })),
     );
   }
 }
