@@ -111,7 +111,7 @@ class PostPage extends HookConsumerWidget {
                                 ///OK
                                 OutlinedButton(
                                   onPressed: () {
-                                    firestoreModel.saveFcmToken();
+                                    firestoreModel.saveFcmToken(token: fcmToken);
                                     if (fcmToken != '') {
                                       firestoreModel.add2Firestore(
                                           text: text,
