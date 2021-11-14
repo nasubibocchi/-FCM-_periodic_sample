@@ -133,13 +133,13 @@ class PostPage extends HookConsumerWidget {
                       });
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Theme.of(context).primaryColor,
+                  primary: Colors.white,
                   elevation: 5.0,
                   shape: const StadiumBorder(),
                 ),
                 child: const Text(
                   '登録する',
-                  style: TextStyle(color: Colors.white, fontSize: 16.0),
+                  style: TextStyle(color: Colors.pink, fontSize: 16.0),
                 )),
             const SizedBox(height: 30.0),
           ],
