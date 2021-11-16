@@ -6,7 +6,7 @@ const firestore = admin.firestore();
 
 const message = (fcmToken, text) => ({
     notification: {
-        title: '新しいメッセージがあります',
+        title: '今日が期限の項目があります',
         body: `${text}`,
     },
     android: {
@@ -32,8 +32,8 @@ const message = (fcmToken, text) => ({
 
 exports.myPush = functions.region('asia-northeast1')
     .runWith({ memory: '512MB' })
-    // .pubsub.schedule('every day 09:00')
-    .pubsub.schedule('every 1 minutes')
+    .pubsub.schedule('every day 09:00')
+    // .pubsub.schedule('every 1 minutes')
     .timeZone('Asia/Tokyo')
     .onRun(async (context) => {
 
@@ -57,7 +57,7 @@ exports.myPush = functions.region('asia-northeast1')
                 let notifyYear = notifyDate.getFullYear();
                 let notifyMonth = notifyDate.getMonth() + 1;
                 let notifyDay = notifyDate.getDate() + 1;
-                console.log('notifyDay =  ', `${notifyYear}年${notifyMonth}月${notifyDay}日`);
+                // console.log('notifyDay =  ', `${notifyYear}年${notifyMonth}月${notifyDay}日`);
 
                 if (notifyYear == year && notifyMonth == month && notifyDay == day) {
                     let fcmToken = doc.data()['fcmToken'];
